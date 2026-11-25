@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: xray-render-oregon
+    runtime: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    # Do NOT set healthCheckPath: Render's default is a TCP probe, which
+    # passes as soon as Xray listens on $PORT. An HTTP health check would
+    # fail because Xray returns 404 on plain GET /.
+    envVars:
+      - key: UUID
+        sync: false
+      - key: WS_PATH
+        sync: false
